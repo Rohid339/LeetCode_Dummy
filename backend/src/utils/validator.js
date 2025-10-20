@@ -14,8 +14,6 @@ const validate = (data)=>{
     if(!validator.isEmail(data.emailId))
         throw new Error("Invalid Email");
 
-    if(!validator.isStrongPassword(data.password))
-        throw new Error("Week Password");
 }
 
 module.exports = validate;
