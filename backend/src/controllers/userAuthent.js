@@ -10,6 +10,7 @@ const register = async (req,res)=>{
     
     try{
         // validate the data;
+        console.log("Register request body:", req.body);
 
       validate(req.body); 
       const {firstName, emailId, password}  = req.body;
@@ -32,10 +33,15 @@ const register = async (req,res)=>{
         user:reply,
         message:"Loggin Successfully"
     })
-    }
-    catch(err){
-        res.status(400).send("Error: "+err);
-    }
+    }catch(err){
+    console.error("Register error:", err);
+    if(err.code === 11000) return res.status(400).send("Email already registered");
+    res.status(400).send("Error: " + (err.message || err));
+}
+
+    // catch(err){
+    //     res.status(400).send("Error: "+err);
+    // }
 }
 
 
