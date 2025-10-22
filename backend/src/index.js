@@ -10,6 +10,7 @@ const submitRouter = require("./routes/submit")
 const aiRouter = require("./routes/aiChatting")
 const videoRouter = require("./routes/videoCreator");
 const cors = require('cors')
+const PORT = process.env.PORT || 9000;
 
 // console.log("Hello")
 
@@ -53,9 +54,13 @@ const InitalizeConnection = async ()=>{
         await Promise.all([main(),redisClient.connect()]);
         console.log("DB Connected");
         
-        app.listen(process.env.PORT, ()=>{
-            console.log("Server listening at port number: "+ process.env.PORT);
-        })
+        // app.listen(process.env.PORT, ()=>{
+        //     console.log("Server listening at port number: "+ process.env.PORT);
+        // })
+
+      app.listen(PORT, () => {
+          console.log(`✅ Server listening on port: ${PORT}`);
+        });
 
     }
     catch(err){
