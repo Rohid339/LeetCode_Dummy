@@ -201,8 +201,8 @@ app.use('/video', videoRouter);
     console.error('⚠ Warning:', err.message);
   } finally {
     app.listen(PORT, '0.0.0.0', () => {
-      console.log(🚀 Server listening on port: ${PORT});
-      console.log(🌐 CORS enabled for: ${allowedOrigins.join(', ')});
+      console.log(`🚀 Server listening on port: ${PORT}`);
+      console.log(`🌐 CORS enabled for: ${allowedOrigins.join(', ')}`);
     });
   }
 })();
