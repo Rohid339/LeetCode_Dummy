@@ -162,26 +162,21 @@ const PORT = process.env.PORT || 9000;
 
 
 const allowedOrigins = [
-  'https://leet-code-dummy.vercel.app',
+ 
+  'https://leet-code-dummy.vercel.app/'
 ];
 
 app.use(cors({
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true, 
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  exposedHeaders: ['Set-Cookie']
+  credentials: true
 }));
-
 app.use(express.json());
 app.use(cookieParser());
 
