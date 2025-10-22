@@ -162,8 +162,8 @@ const PORT = process.env.PORT || 9000;
 
 
 const allowedOrigins = [
- 
-  'https://leet-code-dummy.vercel.app/'
+  'https://leet-code-dummy.vercel.app',
+  'http://localhost:5173'
 ];
 
 app.use(cors({
