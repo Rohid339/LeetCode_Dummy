@@ -20,7 +20,7 @@ const cors = require('cors')
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://leetcode-clone-roan.vercel.app'
+  // 'https://leetcode-clone-roan.vercel.app'
 ];
 
 app.use(cors({
