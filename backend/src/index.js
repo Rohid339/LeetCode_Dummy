@@ -74,57 +74,62 @@
 
 
 // InitalizeConnection();
-const express = require('express');
-const app = express();
-require('dotenv').config();
+// const express = require('express');
+// const app = express();
+// require('dotenv').config();
 
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-
-
-const main = require('./config/db');
-const redisClient = require('./config/redis');
-const authRouter = require('./routes/userAuth');
-const problemRouter = require('./routes/problemCreator');
-const submitRouter = require('./routes/submit');
-const aiRouter = require('./routes/aiChatting');
-const videoRouter = require('./routes/videoCreator');
-
-const PORT = process.env.PORT || 9000;
-
-app.use(cors());
-app.use(express.json());
-app.use(cookieParser());
-
-app.get('/', (req, res) => {
-  res.send('✅ Server is running with DB & Redis initialization.');
-});
+// const cookieParser = require('cookie-parser');
+// const cors = require('cors');
 
 
-app.use('/user', authRouter);
-app.use('/problem', problemRouter);
-app.use('/submission', submitRouter);
-app.use('/ai', aiRouter);
-app.use('/video', videoRouter);
+// const main = require('./config/db');
+// const redisClient = require('./config/redis');
+// const authRouter = require('./routes/userAuth');
+// const problemRouter = require('./routes/problemCreator');
+// const submitRouter = require('./routes/submit');
+// const aiRouter = require('./routes/aiChatting');
+// const videoRouter = require('./routes/videoCreator');
 
-(async () => {
-  try {
+// const PORT = process.env.PORT || 9000;
+
+// app.use(cors());
+// app.use(express.json());
+// app.use(cookieParser());
+
+// app.get('/', (req, res) => {
+//   res.send('✅ Server is running with DB & Redis initialization.');
+// });
+
+
+// app.use('/user', authRouter);
+// app.use('/problem', problemRouter);
+// app.use('/submission', submitRouter);
+// app.use('/ai', aiRouter);
+// app.use('/video', videoRouter);
+
+//  const allowedOrigins = [
+//   'http://localhost:5173',
+//   'https://leetcode-clone-roan.vercel.app'
+//  ];
+
+// (async () => {
+//   try {
     
-    await main();
-    console.log('✅ MongoDB Connected');
+//     await main();
+//     console.log('✅ MongoDB Connected');
 
     
-    await redisClient.connect();
-    console.log('✅ Redis Connected');
-  } catch (err) {
-    console.error('⚠ Warning:', err.message);
-  } finally {
+//     await redisClient.connect();
+//     console.log('✅ Redis Connected');
+//   } catch (err) {
+//     console.error('⚠ Warning:', err.message);
+//   } finally {
     
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`🚀 Server listening on port: ${PORT}`);
-    });
-  }
-})();
+//     app.listen(PORT, '0.0.0.0', () => {
+//       console.log(`🚀 Server listening on port: ${PORT}`);
+//     });
+//   }
+// })();
 
 
 
@@ -141,3 +146,68 @@ app.use('/video', videoRouter);
 // //   console.log(`✅ Listening on ${PORT}`);
 // // });
 
+const express = require('express');
+const app = express();
+require('dotenv').config();
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const main = require('./config/db');
+const redisClient = require('./config/redis');
+const authRouter = require('./routes/userAuth');
+const problemRouter = require('./routes/problemCreator');
+const submitRouter = require('./routes/submit');
+const aiRouter = require('./routes/aiChatting');
+const videoRouter = require('./routes/videoCreator');
+const PORT = process.env.PORT || 9000;
+
+
+const allowedOrigins = [
+  'https://leet-code-dummy.vercel.app',
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['Set-Cookie']
+}));
+
+app.use(express.json());
+app.use(cookieParser());
+
+app.get('/', (req, res) => {
+  res.send('✅ Server is running with DB & Redis initialization.');
+});
+
+app.use('/user', authRouter);
+app.use('/problem', problemRouter);
+app.use('/submission', submitRouter);
+app.use('/ai', aiRouter);
+app.use('/video', videoRouter);
+ 
+(async () => {
+  try {
+    await main();
+    console.log('✅ MongoDB Connected');
+    
+    await redisClient.connect();
+    console.log('✅ Redis Connected');
+  } catch (err) {
+    console.error('⚠ Warning:', err.message);
+  } finally {
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(🚀 Server listening on port: ${PORT});
+      console.log(🌐 CORS enabled for: ${allowedOrigins.join(', ')});
+    });
+  }
+})();
