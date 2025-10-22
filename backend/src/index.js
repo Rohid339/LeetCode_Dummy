@@ -58,9 +58,13 @@ const InitalizeConnection = async ()=>{
         //     console.log("Server listening at port number: "+ process.env.PORT);
         // })
 
-      app.listen(PORT, () => {
-          console.log(`✅ Server listening on port: ${PORT}`);
-        });
+      // app.listen(PORT, () => {
+      //     console.log(`✅ Server listening on port: ${PORT}`);
+      //   });
+
+      app.listen(PORT, "0.0.0.0", () => {
+          console.log(✅ Server listening on port: ${PORT});
+      });
 
     }
     catch(err){
